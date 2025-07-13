@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✈️ Flight Booking Frontend
 
-## Getting Started
+This is the frontend for the **Flight Booking System**, built using **Next.js ** and **TailwindCSS**, integrated with **Supabase Auth** for user login and **Edge Functions** for API access.
 
-First, run the development server:
+---
+
+# Live
+https://flight-booking-frontend-one.vercel.app/
+
+## 🧱 Tech Stack
+
+* **Next.js 14** with App Router
+* **React** + **TypeScript**
+* **TailwindCSS** for UI styling
+* **Supabase Auth** for login/signup
+* **Supabase Storage** for ticket PDFs
+* **Edge Function APIs** (hosted on Supabase)
+
+---
+
+## 🚀 Features
+
+* 🔐 **Login/Signup with Supabase**
+* 📅 **Search Flights** by origin, destination, date, cabin class, passengers
+* 📖 **Book Flights** (one-way or round trip)
+* 📄 **Download Tickets** (PDF from Supabase Storage)
+* 🔄 **Modify or Cancel Bookings**
+* 🟢 **Live Flight Status** via Supabase Realtime
+* ✅ **Fully integrated with Edge Function backend**
+
+---
+
+## 🔧 Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/flight-booking-frontend.git
+cd flight-booking-frontend
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Configure Supabase Environment
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://<your-project>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
+```
+
+These values can be found in your Supabase project dashboard → Settings → API.
+
+---
+
+## 🧪 Run Locally
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔐 Auth Flow
 
-## Learn More
+* **useAuth** context provides `user`, `session`, and `authLoading`.
+* Auth state is persisted using Supabase’s client SDK.
+* Pages are protected based on session presence (`my-bookings`, `book`, etc.).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 API Integration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+All requests to backend use **Supabase Edge Functions** via `/api/` route handlers:
 
-## Deploy on Vercel
+* `/api/searchFlights` → `supabase/functions/searchFlights`
+* `/api/createBooking` → `supabase/functions/createBooking`
+* `/api/cancelBooking` → `supabase/functions/cancelBooking`
+* `/api/getMyBookings` → fetch user bookings
+* `/api/flightStatusSSE` → listen to real-time flight updates
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 📌 Deployment
+
+* deployed the frontend to **Vercel** with github for smooth CI/CD.
+* Ensure environment variables are added to project settings.
+
+---
+
+
+
+
+
