@@ -1,17 +1,17 @@
 'use client';
-export const dynamic = 'force-dynamic';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
 
 export default function RoundTripBook() {
     const { session } = useAuth();
     const router = useRouter();
-    const params = useSearchParams();
-    const outboundId = params.get('outboundId')!;
-    const returnId = params.get('returnId')!;
+    const { outboundId, returnId } = useParams() as {
+        outboundId: string;
+        returnId: string;
+    };
 
     const [cabin, setCabin] = useState<'Economy' | 'Business' | 'First'>('Economy');
     const [passengers, setPassengers] = useState(1);

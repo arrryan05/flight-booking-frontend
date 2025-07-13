@@ -85,7 +85,8 @@ export default function SearchPage() {
                 cabinClass: cabin,
                 passengerCount: passengers.toString(),
             });
-            router.push(`/book/roundTrip?${params}`);
+            // router.push(`/book/roundTrip?${params}`);
+            router.push(`/book/roundTrip/${selectedOutbound.id}/${selectedInbound.id}`);
         } else {
             router.push(`/book/${selectedOutbound.id}`);
         }
