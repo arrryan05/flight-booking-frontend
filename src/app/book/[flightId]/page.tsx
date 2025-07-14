@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 import type { Flight } from '@/types/database';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function BookPage() {
   const { user, session, authLoading } = useAuth();
@@ -38,8 +39,12 @@ export default function BookPage() {
       .eq('id', flightId)
       .single()
       .then(({ data, error }) => {
-        if (error) setError(error.message);
-        else setFlight(data!);
+        if (error) {
+          setError(error.message);
+          toast.error(error.message);
+        } else {
+          setFlight(data!);
+        }
       });
   }, [flightId]);
 
@@ -68,8 +73,10 @@ export default function BookPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Booking failed');
       setResult(data);
+      toast.success('Booking confirmed!');
     } catch (err: any) {
       setError(err.message);
+      toast.error(err.message || 'Could not complete booking');
     } finally {
       setLoading(false);
     }
@@ -79,6 +86,7 @@ export default function BookPage() {
   if (result) {
     return (
       <div className="min-h-screen bg-[#f5f7fa] pt-12 px-4">
+        <Toaster position="bottom-right" />
         <div className="max-w-md mx-auto bg-white rounded-lg shadow p-6 space-y-4">
           <h1 className="text-2xl font-bold text-gray-800">Booking Confirmed!</h1>
           <p className='text-gray-800'><strong>Booking ID:</strong> {result.booking.id}</p>
@@ -104,6 +112,7 @@ export default function BookPage() {
   // **Form view**
   return (
     <div className="min-h-screen bg-[#f5f7fa] pt-12 px-4">
+      <Toaster position="top-right" />
       <div className="max-w-md mx-auto bg-white rounded-lg shadow p-6 space-y-6">
         <h1 className="text-2xl font-bold text-[#002652]">
           Book Flight: {flight.flight_no}
@@ -160,3 +169,4 @@ export default function BookPage() {
     </div>
   );
 }
+

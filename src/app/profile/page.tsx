@@ -30,8 +30,8 @@ export default function ProfilePage() {
     }
   }, [profile]);
 
-  if (profileLoading) return <p className="p-6">Loading profile…</p>;
-  if (profileError) return <p className="p-6 text-red-600">Error: {profileError.message}</p>;
+  // if (profileLoading) return <p className="p-6">Loading profile…</p>;
+  // if (profileError) return <p className="p-6 text-red-600">Error: {profileError.message}</p>;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

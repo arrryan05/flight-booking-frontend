@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function RoundTripBook() {
     const { session } = useAuth();
@@ -35,8 +36,10 @@ export default function RoundTripBook() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || 'Booking failed');
             setResult(data);
+            toast.success('Booking confirmed!');
         } catch (err: any) {
             setError(err.message);
+            toast.error(err.message || 'Could not complete booking');
         } finally {
             setLoading(false);
         }
@@ -46,6 +49,7 @@ export default function RoundTripBook() {
     if (result) {
         return (
             <div className="min-h-screen bg-[#f5f7fa] pt-12 px-4">
+                <Toaster position="bottom-right" />
                 <div className="max-w-md mx-auto bg-white rounded-lg shadow p-6 space-y-4">
                     <h1 className="text-2xl font-bold text-[#002652]">Round Trip Booked!</h1>
 
