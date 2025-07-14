@@ -31,6 +31,7 @@ export default function SearchPage() {
     const [inbound, setInbound] = useState<Flight[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [hasSearched, setHasSearched] = useState(false);
 
     const [selectedOutbound, setSelectedOutbound] = useState<Flight | null>(null);
     const [selectedInbound, setSelectedInbound] = useState<Flight | null>(null);
@@ -51,8 +52,10 @@ export default function SearchPage() {
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!origin || !destination || !departDate) return;
+
         setLoading(true);
         setError(null);
+        setHasSearched(true);
         setOutbound([]);
         setInbound([]);
         setSelectedOutbound(null);
@@ -226,6 +229,20 @@ export default function SearchPage() {
 
                     {error && <p className="text-red-600 mt-4">{error}</p>}
 
+                    {/* —— NEW: Intro / no-search prompt —— */}
+                    {!hasSearched && !loading && (
+                        <p className="mt-6 text-center text-gray-600">
+                            Please select origin, destination, and departure date above, then click “Search”
+                        </p>
+                    )}
+
+                    {/* —— NEW: No outbound flights on date —— */}
+                    {hasSearched && !loading && outbound.length === 0 && (
+                        <p className="mt-6 text-center text-gray-600">
+                            No outbound flights found for {departDate}.
+                        </p>
+                    )}
+
                     {/* Outbound */}
                     {sortedOutbound.length > 0 && (
                         <section className="mt-6">
@@ -265,6 +282,12 @@ export default function SearchPage() {
                                 ))}
                             </ul>
                         </section>
+                    )}
+
+                    {hasSearched && returnDate && !loading && inbound.length === 0 && (
+                        <p className="mt-6 text-center text-gray-600">
+                            No return flights found for {returnDate}.
+                        </p>
                     )}
 
                     {/* Inbound */}
