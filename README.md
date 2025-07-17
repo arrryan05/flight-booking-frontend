@@ -27,6 +27,7 @@ https://flight-booking-frontend-one.vercel.app/
 * 🔄 **Modify or Cancel Bookings**
 * 🟢 **Live Flight Status** via Supabase Realtime
 * ✅ **Fully integrated with Edge Function backend**
+* Used **IndexDb** to cache the search results for offline support 
 
 ---
 
